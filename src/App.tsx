@@ -5,11 +5,11 @@ import { AdventCard } from './components/AdventCard';
 import { EventModal } from './components/EventModal';
 import { NewEventModal } from './components/NewEventModal';
 import { PrintableCardSheet } from './components/PrintableCardSheet';
-import { Flame, Sparkles, Info, Unlock } from 'lucide-react';
+import { Info, Flame } from 'lucide-react';
 
 export function App() {
   const [events, setEvents] = useState<ParochialEvent[]>(() => {
-    const saved = localStorage.getItem('parochial_events_candelaria_v1');
+    const saved = localStorage.getItem('parochial_events_candelaria_v2');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -31,17 +31,13 @@ export function App() {
   const [isNewEventModalOpen, setIsNewEventModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    localStorage.setItem('parochial_events_candelaria_v1', JSON.stringify(events));
+    localStorage.setItem('parochial_events_candelaria_v2', JSON.stringify(events));
   }, [events]);
 
   const handleToggleDoor = (id: string) => {
     setOpenedEventIds((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
-  };
-
-  const handleOpenAllDoors = () => {
-    setOpenedEventIds(events.map((e) => e.id));
   };
 
   const handleAddEvent = (newEvent: ParochialEvent) => {
@@ -74,7 +70,7 @@ export function App() {
 
   return (
     <div className="min-h-screen candelaria-bg text-slate-100 flex flex-col font-['Plus_Jakarta_Sans',sans-serif]">
-      {/* HEADER */}
+      {/* HEADER COMPONENT */}
       <Header
         selectedMonth={selectedMonth}
         onSelectMonth={setSelectedMonth}
@@ -86,42 +82,11 @@ export function App() {
         openedEventsCount={openedEventIds.length}
       />
 
-      {/* MAIN CONTAINER */}
-      <main className="no-print flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* MAIN CALENDAR GRID */}
+      <main className="no-print flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
-        {/* HERO BANNER: MANTO Y CANDELA DE LA CANDELARIA */}
-        <div className="relative rounded-3xl bg-gradient-to-r from-[#091530]/95 via-[#15397a]/60 to-[#060b18] border-2 border-sky-400/40 p-6 sm:p-10 mb-10 overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-sky-500/15 rounded-full blur-2xl pointer-events-none" />
-
-          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-            <div className="space-y-3 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#15397a] border border-sky-400/40 text-amber-300 text-xs font-extrabold uppercase tracking-wider">
-                <Flame className="w-4 h-4 text-amber-400 candle-flame" /> Bajo el Manto de la Virgen de la Candelaria
-              </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-['Playfair_Display',serif] tracking-tight gold-gradient-text leading-tight">
-                Calendario de Adviento Parroquial
-              </h2>
-              <p className="text-sm text-slate-200 leading-relaxed font-normal">
-                Abrí cada <strong className="text-amber-300 font-bold">ventana de la candela</strong> para desvelar la luz de las jornadas parroquiales (Pañales, Salud San Julián, Mamá Carolina `@ecodap` y Jóvenes Manantial).
-              </p>
-            </div>
-
-            <div className="flex items-center gap-3 shrink-0">
-              <button
-                onClick={handleOpenAllDoors}
-                className="px-5 py-3 rounded-xl bg-[#091530] hover:bg-[#15397a] border border-amber-400/50 text-amber-300 text-xs font-extrabold shadow-lg transition-all cursor-pointer flex items-center gap-2"
-              >
-                <Unlock className="w-4 h-4 text-amber-400" />
-                <span>Abrir Todas las Ventanas</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* CALENDAR ADVENT GRID */}
         {filteredEvents.length === 0 ? (
-          <div className="text-center py-16 px-4 rounded-3xl bg-[#091530]/80 border border-sky-900/60">
+          <div className="text-center py-16 px-4 rounded-3xl bg-[#091530]/80 border border-sky-900/60 my-6">
             <Info className="w-12 h-12 text-amber-400/80 mx-auto mb-3" />
             <h3 className="text-lg font-bold text-slate-200 font-['Playfair_Display',serif]">
               No hay eventos para el filtro seleccionado
@@ -147,13 +112,13 @@ export function App() {
       </main>
 
       {/* FOOTER */}
-      <footer className="no-print border-t border-sky-950 bg-[#060b18] py-6 text-center text-xs text-slate-400">
+      <footer className="no-print border-t border-sky-950 bg-[#060b18] py-5 text-center text-xs text-slate-400">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Flame className="w-4 h-4 text-amber-400 candle-flame" />
-            <span>Calendario Parroquial • Manto de Nuestra Señora de la Candelaria</span>
+            <span>Calendario Parroquial • Nuestra Señora de la Candelaria</span>
           </div>
-          <span>Inspirado en adviento.dev & AdventJS</span>
+          <span>Jornadas y Actividades Comunitarias</span>
         </div>
       </footer>
 

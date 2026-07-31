@@ -76,67 +76,57 @@ export const AdventCard: React.FC<AdventCardProps> = ({
     <div className="card-perspective h-[310px] w-full">
       <div className={`card-flipper ${isOpened ? 'is-flipped' : ''}`}>
         
-        {/* FRONT FACE: PUERTA DE ADVIENTO (MANTO AZUL & CANDELA DE LA CANDELARIA) */}
+        {/* FRONT FACE: PUERTA DE ADVIENTO */}
         <div
           onClick={() => onToggleOpen(event.id)}
-          className={`card-face card-face-front bg-gradient-to-b from-[#091530] via-slate-950 to-[#060b18] border-2 ${theme.frontBorder} p-5 flex flex-col justify-between cursor-pointer group shadow-2xl transition-all overflow-hidden rounded-2xl`}
+          className={`card-face card-face-front bg-gradient-to-b from-[#091530] via-slate-950 to-[#060b18] border-2 ${theme.frontBorder} p-5 flex flex-col justify-between cursor-pointer group shadow-xl transition-all overflow-hidden rounded-2xl`}
         >
-          {/* Candle Flame Header Badge */}
-          <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#060b18]/80 border border-amber-400/40 shadow-inner">
-            <Flame className="w-3.5 h-3.5 text-amber-400 candle-flame" />
-            <span className="text-[10px] font-extrabold text-amber-300 tracking-wider">CANDELA</span>
-          </div>
-
-          {/* Background Stained Glass Light Beam */}
+          {/* Subtle Ambient Light Beam */}
           <div className="absolute -top-12 -left-12 w-36 h-36 bg-sky-500/10 rounded-full blur-3xl group-hover:bg-amber-400/15 transition-all pointer-events-none" />
 
-          {/* Date Tag */}
-          <div className="flex items-center relative z-10 pt-1">
-            <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-[#15397a]/80 text-sky-100 border border-sky-400/40 shadow-sm">
-              {event.dateString}
-            </span>
-          </div>
-
-          {/* Center Door Medallion */}
-          <div className="my-auto flex flex-col items-center justify-center relative z-10 text-center">
-            <div className="relative mb-2">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-b from-[#15397a] to-[#091530] border-2 border-amber-400/60 flex items-center justify-center shadow-lg group-hover:scale-105 group-hover:border-amber-300 transition-transform">
-                <IconComponent className="w-8 h-8 text-amber-300 group-hover:text-white transition-colors" />
-              </div>
-            </div>
-
-            {/* Door Number Stamp */}
-            <div className="font-['Cinzel',serif] text-5xl font-black gold-gradient-text tracking-tight mt-1">
-              #{event.doorNumber}
-            </div>
-
-            <p className="text-xs text-slate-200 font-bold line-clamp-1 max-w-[200px] mt-1 group-hover:text-amber-300 transition-colors">
-              {event.title}
-            </p>
-          </div>
-
-          {/* Bottom Bar: Action */}
-          <div className="pt-3 border-t border-sky-900/60 flex items-center justify-between text-xs relative z-10">
-            <span className="px-2.5 py-0.5 rounded bg-slate-900/80 text-slate-300 font-bold border border-slate-800">
+          {/* Top Bar: Category Pill on Left, Lock Status on Right */}
+          <div className="flex items-center justify-between relative z-10">
+            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#15397a]/80 text-sky-200 border border-sky-400/30">
               {event.category}
             </span>
-            <span className="text-amber-300 font-extrabold group-hover:translate-x-1 transition-transform flex items-center gap-1">
-              <Lock className="w-3 h-3 text-amber-400" /> Abrir Puerta →
+
+            <span className="flex items-center gap-1 text-[11px] font-semibold text-slate-400 group-hover:text-amber-300 transition-colors">
+              <Lock className="w-3.5 h-3.5 text-amber-400" />
+              <span>Abrir Puerta</span>
             </span>
+          </div>
+
+          {/* Center Emblem: Day Number & Month */}
+          <div className="my-auto flex flex-col items-center justify-center relative z-10 text-center">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-b from-[#15397a] to-[#091530] border border-amber-400/50 flex items-center justify-center shadow-md mb-2 group-hover:scale-105 group-hover:border-amber-300 transition-transform">
+              <IconComponent className="w-7 h-7 text-amber-300 group-hover:text-white transition-colors" />
+            </div>
+
+            {/* Giant Day Number */}
+            <div className="font-['Cinzel',serif] text-5xl font-black gold-gradient-text tracking-tight leading-none">
+              {event.doorNumber}
+            </div>
+            <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mt-1">
+              {event.month}
+            </span>
+          </div>
+
+          {/* Bottom Bar: Title */}
+          <div className="pt-2.5 border-t border-sky-900/60 relative z-10 text-center">
+            <p className="text-xs text-slate-200 font-bold line-clamp-1 group-hover:text-amber-300 transition-colors">
+              {event.title}
+            </p>
           </div>
         </div>
 
         {/* BACK FACE: EVENTO DESVELADO */}
         <div className={`card-face card-face-back bg-gradient-to-b ${theme.backBg} border-2 ${theme.backBorder} p-5 flex flex-col justify-between shadow-2xl rounded-2xl overflow-hidden`}>
           
-          {/* Header inside opened door */}
+          {/* Header inside opened door: Date string + Close button */}
           <div className="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
-            <div className="flex items-center gap-1.5">
-              <span className={`px-2.5 py-0.5 rounded-full text-xs font-extrabold border ${theme.badge}`}>
-                {event.dateString}
-              </span>
-              <span className="text-xs text-amber-300 font-black">#{event.doorNumber}</span>
-            </div>
+            <span className={`px-2.5 py-0.5 rounded-full text-xs font-extrabold border ${theme.badge}`}>
+              {event.dateString}
+            </span>
 
             <button
               onClick={() => onToggleOpen(event.id)}
@@ -147,7 +137,7 @@ export const AdventCard: React.FC<AdventCardProps> = ({
             </button>
           </div>
 
-          {/* Body */}
+          {/* Content inside opened card */}
           <div className="my-auto space-y-2">
             <h3 className="text-sm font-bold text-white line-clamp-2 leading-snug font-['Plus_Jakarta_Sans',sans-serif]">
               {event.title}
