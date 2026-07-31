@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ParochialEvent } from '../data/events';
-import { X, Plus, Calendar, Clock, MapPin, Tag, Users, Sparkles } from 'lucide-react';
+import { X, Sparkles } from 'lucide-react';
 
 interface NewEventModalProps {
   isOpen: boolean;
@@ -11,13 +11,13 @@ interface NewEventModalProps {
 export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, onAddEvent }) => {
   const [doorNumber, setDoorNumber] = useState<number>(10);
   const [dateString, setDateString] = useState<string>('10 de Agosto');
-  const [month, setMonth] = useState<'Julio' | 'Agosto' | 'Septiembre'>('Agosto');
+  const [month, setMonth] = useState<'Julio' | 'Agosto'>('Agosto');
   const [title, setTitle] = useState<string>('');
   const [shortSummary, setShortSummary] = useState<string>('');
   const [fullDescription, setFullDescription] = useState<string>('');
-  const [time, setTime] = useState<string>('09:00 AM - 01:00 PM');
+  const [time, setTime] = useState<string>('09:00 AM - 04:00 PM');
   const [location, setLocation] = useState<string>('Salón Parroquial');
-  const [category, setCategory] = useState<'Caridad' | 'Salud' | 'Juventud' | 'Niños' | 'Familia' | 'Liturgia'>('Liturgia');
+  const [category, setCategory] = useState<'Niños' | 'Salud' | 'Juventud' | 'Familia' | 'Caridad'>('Niños');
   const [targetAudience, setTargetAudience] = useState<string>('');
   const [organizer, setOrganizer] = useState<string>('Equipo Parroquial');
   const [socialHandle, setSocialHandle] = useState<string>('');
@@ -27,6 +27,18 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !dateString.trim()) return;
+
+    const iconName: ParochialEvent['iconName'] = 
+      category === 'Niños' ? 'Baby' : 
+      category === 'Salud' ? 'Stethoscope' : 
+      category === 'Juventud' ? 'Users' : 
+      category === 'Familia' ? 'HeartHandshake' : 'Sparkles';
+
+    const colorTheme: ParochialEvent['colorTheme'] = 
+      category === 'Niños' ? 'amber' : 
+      category === 'Salud' ? 'emerald' : 
+      category === 'Juventud' ? 'indigo' : 
+      category === 'Familia' ? 'rose' : 'gold';
 
     const newEvent: ParochialEvent = {
       id: `evt-${Date.now()}`,
@@ -42,9 +54,9 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
       targetAudience: targetAudience || undefined,
       organizer: organizer || undefined,
       socialHandle: socialHandle || undefined,
-      iconName: category === 'Niños' ? 'Baby' : category === 'Salud' ? 'Stethoscope' : category === 'Juventud' ? 'Users' : category === 'Familia' ? 'HeartHandshake' : category === 'Caridad' ? 'Sparkles' : 'Church',
-      colorGradient: 'from-amber-500/20 via-orange-500/10 to-amber-900/30',
-      printableNotes: 'Presentarse 10 minutos antes del inicio del evento.',
+      iconName,
+      colorTheme,
+      printableNotes: 'Presentarse a tiempo en la ubicación del evento.',
     };
 
     onAddEvent(newEvent);
@@ -52,7 +64,7 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
   };
 
   return (
-    <div className="no-print fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn">
+    <div className="no-print fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fadeIn">
       <div 
         className="relative w-full max-w-xl rounded-3xl bg-slate-900 border-2 border-amber-500/40 shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
@@ -60,8 +72,8 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-amber-400" />
-            <h3 className="text-lg font-bold text-slate-100 font-['Cinzel',serif]">
-              Agregar Nuevo Evento Parroquial
+            <h3 className="text-lg font-bold text-slate-100 font-['Playfair_Display',serif]">
+              Agregar Evento Parroquial
             </h3>
           </div>
           <button
@@ -75,7 +87,7 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
         <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-1">Número de Ventana (#)</label>
+              <label className="block text-xs font-bold text-slate-400 mb-1">Número (#)</label>
               <input
                 type="number"
                 value={doorNumber}
@@ -85,7 +97,7 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-1">Fecha Visible (Ej: 10 de Agosto)</label>
+              <label className="block text-xs font-bold text-slate-400 mb-1">Fecha Visible (Ej: 10 de Agosto)</label>
               <input
                 type="text"
                 value={dateString}
@@ -98,7 +110,7 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-1">Mes</label>
+              <label className="block text-xs font-bold text-slate-400 mb-1">Mes</label>
               <select
                 value={month}
                 onChange={(e) => setMonth(e.target.value as any)}
@@ -106,28 +118,26 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
               >
                 <option value="Julio">Julio</option>
                 <option value="Agosto">Agosto</option>
-                <option value="Septiembre">Septiembre</option>
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-1">Categoría</label>
+              <label className="block text-xs font-bold text-slate-400 mb-1">Categoría</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as any)}
                 className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
               >
                 <option value="Niños">Niños</option>
-                <option value="Caridad">Caridad</option>
                 <option value="Salud">Salud</option>
                 <option value="Juventud">Juventud</option>
                 <option value="Familia">Familia</option>
-                <option value="Liturgia">Liturgia</option>
+                <option value="Caridad">Caridad</option>
               </select>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1">Título del Evento</label>
+            <label className="block text-xs font-bold text-slate-400 mb-1">Título del Evento</label>
             <input
               type="text"
               value={title}
@@ -140,7 +150,7 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-1">Horario</label>
+              <label className="block text-xs font-bold text-slate-400 mb-1">Horario</label>
               <input
                 type="text"
                 value={time}
@@ -150,7 +160,7 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-1">Lugar / Ubicación</label>
+              <label className="block text-xs font-bold text-slate-400 mb-1">Lugar</label>
               <input
                 type="text"
                 value={location}
@@ -162,30 +172,30 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1">Resumen Corto</label>
+            <label className="block text-xs font-bold text-slate-400 mb-1">Resumen Corto</label>
             <input
               type="text"
               value={shortSummary}
               onChange={(e) => setShortSummary(e.target.value)}
-              placeholder="Breve vista previa para la tarjeta de adviento"
+              placeholder="Breve vista previa para la tarjeta"
               className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1">Descripción Completa</label>
+            <label className="block text-xs font-bold text-slate-400 mb-1">Descripción Completa</label>
             <textarea
               rows={3}
               value={fullDescription}
               onChange={(e) => setFullDescription(e.target.value)}
-              placeholder="Detalles sobre qué llevar, actividades, etc."
+              placeholder="Detalles adicionales sobre la actividad"
               className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-1">Organizador / Pastoral</label>
+              <label className="block text-xs font-bold text-slate-400 mb-1">Organizador</label>
               <input
                 type="text"
                 value={organizer}
@@ -195,7 +205,7 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-1">Red Social / Tag (Opcional)</label>
+              <label className="block text-xs font-bold text-slate-400 mb-1">Red Social / Tag (Opcional)</label>
               <input
                 type="text"
                 value={socialHandle}
@@ -210,7 +220,7 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold cursor-pointer"
             >
               Cancelar
             </button>

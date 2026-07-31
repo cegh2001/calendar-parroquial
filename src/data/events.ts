@@ -1,19 +1,19 @@
 export interface ParochialEvent {
   id: string;
-  doorNumber: number; // Número visible en la puerta de adviento (e.g. 28, 31, 1, 4, 8, etc)
-  dateString: string; // Ej: "28 de Julio"
-  month: 'Julio' | 'Agosto' | 'Septiembre';
+  doorNumber: number;
+  dateString: string;
+  month: 'Julio' | 'Agosto';
   title: string;
   shortSummary: string;
   fullDescription: string;
   time: string;
   location: string;
-  category: 'Caridad' | 'Salud' | 'Juventud' | 'Niños' | 'Familia' | 'Liturgia';
+  category: 'Niños' | 'Salud' | 'Juventud' | 'Familia' | 'Caridad';
   targetAudience?: string;
   organizer?: string;
   socialHandle?: string;
-  iconName: 'Baby' | 'Stethoscope' | 'HeartHandshake' | 'Users' | 'Sparkles' | 'Sun' | 'Cross' | 'Church' | 'BookOpen';
-  colorGradient: string; // Para el interior de la ventana desplegada estilo advent
+  iconName: 'Baby' | 'Stethoscope' | 'HeartHandshake' | 'Users' | 'Sparkles';
+  colorTheme: 'gold' | 'rose' | 'emerald' | 'indigo' | 'amber';
   printableNotes?: string;
 }
 
@@ -24,16 +24,16 @@ export const INITIAL_EVENTS: ParochialEvent[] = [
     dateString: '28 de Julio',
     month: 'Julio',
     title: 'Jornada de Niños: Entrega de Pañales y Donaciones',
-    shortSummary: 'Jornada especial dedicada a la infancia con entrega de pañales, insumos esenciales y actividades para familias.',
-    fullDescription: 'Un espacio parroquial solidario dedicado a apoyar a las familias de la comunidad con bebés e infancia temprana. Realizaremos la entrega gratuita de pañales, ropa y productos de primera necesidad, acompañado de una merienda comunitaria.',
-    time: '09:00 AM - 01:00 PM',
-    location: 'Salón Parroquial Principal',
-    category: 'Caridad',
-    targetAudience: 'Familias, Bebés e Infancia',
-    organizer: 'Pastoral Social Parroquial',
+    shortSummary: 'Entrega especial de pañales, insumos esenciales y atención para familias de la comunidad.',
+    fullDescription: 'Jornada dedicada al apoyo de la primera infancia y familias de la parroquia. Se realizará la entrega de pañales, insumos de cuidado infantil y donaciones comunitarias.',
+    time: 'Por la mañana',
+    location: 'Salón Parroquial',
+    category: 'Niños',
+    targetAudience: 'Familias y Bebés',
+    organizer: 'Pastoral Social',
     iconName: 'Baby',
-    colorGradient: 'from-amber-500/20 via-orange-500/10 to-amber-900/30',
-    printableNotes: 'Presentar cédula o registro en el salón. Donaciones bienvenidas.'
+    colorTheme: 'amber',
+    printableNotes: 'Presentarse en el salón parroquial. Actividad comunitaria de apoyo infantil.'
   },
   {
     id: 'evt-28-2',
@@ -41,16 +41,16 @@ export const INITIAL_EVENTS: ParochialEvent[] = [
     dateString: '28 de Julio',
     month: 'Julio',
     title: 'Jornada Médica San Julián Capilla',
-    shortSummary: 'Atención médica gratuita, toma de presión, medicina general y despistaje para la comunidad de San Julián.',
-    fullDescription: 'Jornada integral de atención en salud comunitaria en las instalaciones de la Capilla San Julián. Contaremos con médicos voluntarios para consultas generales, control de tensión arterial, glucemia y orientación farmacéutica.',
-    time: '08:00 AM - 02:00 PM',
+    shortSummary: 'Atención médica comunitaria, toma de tensión y consultas en la Capilla San Julián.',
+    fullDescription: 'Jornada integral de salud para toda la comunidad en la Capilla San Julián. Atención médica general, orientación preventiva y toma de constantes vitales.',
+    time: 'Por la mañana',
     location: 'Capilla San Julián',
     category: 'Salud',
-    targetAudience: 'Comunidad en General y Adultos Mayores',
-    organizer: 'Voluntariado de Salud Parroquial',
+    targetAudience: 'Comunidad en General',
+    organizer: 'Equipo de Salud San Julián',
     iconName: 'Stethoscope',
-    colorGradient: 'from-emerald-500/20 via-teal-500/10 to-emerald-900/30',
-    printableNotes: 'Atención por orden de llegada. Se recomienda acudir en ayunas para exámenes de glicemia.'
+    colorTheme: 'emerald',
+    printableNotes: 'Atención médica por orden de llegada en la Capilla San Julián.'
   },
   {
     id: 'evt-31-1',
@@ -58,34 +58,34 @@ export const INITIAL_EVENTS: ParochialEvent[] = [
     dateString: '31 de Julio',
     month: 'Julio',
     title: 'Cierre de Actividad de Mamá Carolina',
-    shortSummary: 'Encuentro de cierre de ciclo, compartir y acción de gracias del programa Mamá Carolina.',
-    fullDescription: 'Celebramos el cierre del ciclo de actividades comunitarias del programa Mamá Carolina. Un espacio de testimonio, oración compartida, agradecimiento a las colaboradoras y proyección para el próximo semestre.',
-    time: '03:00 PM - 06:00 PM',
+    shortSummary: 'Encuentro de cierre de actividades comunitarias del programa Mamá Carolina.',
+    fullDescription: 'Actividad de cierre y encuentro especial del programa Mamá Carolina. Espacio de compartir, balance de actividades y convivencia comunitaria.',
+    time: 'Por la tarde',
     location: 'Centro Comunitario Parroquial',
     category: 'Familia',
-    targetAudience: 'Madres, Voluntarias y Comunidad',
-    organizer: 'Equipo Mamá Carolina',
+    targetAudience: 'Madres y Familia',
+    organizer: 'Mamá Carolina',
     socialHandle: '@ecodap',
     iconName: 'HeartHandshake',
-    colorGradient: 'from-rose-500/20 via-pink-500/10 to-rose-900/30',
-    printableNotes: 'Traer un plato o bebida para compartir en el agape comunal. Sigue @ecodap para más detalles.'
+    colorTheme: 'rose',
+    printableNotes: 'Cierre de actividad del grupo Mamá Carolina. Sigue @ecodap para novedades.'
   },
   {
     id: 'evt-31-2',
     doorNumber: 31,
     dateString: '31 de Julio',
     month: 'Julio',
-    title: 'Atención Jóvenes Parroquia Manantial',
-    shortSummary: 'Encuentro de escucha, orientación, dinámicas y convivencia para la juventud de Manantial.',
-    fullDescription: 'Jornada especial de acompañamiento juvenil. Actividades dinámicas, espacios de escucha activa, conversatorio sobre proyectos personales y momento de fraternidad con los jóvenes de la comunidad Manantial.',
-    time: '04:00 PM - 07:30 PM',
-    location: 'Parroquia Manantial - Casa Pastoral',
+    title: 'Atención Jóvenes de la Parroquia Manantial',
+    shortSummary: 'Jornada de atención, escucha y espacio fraterno para la juventud parroquial.',
+    fullDescription: 'Encuentro dedicado a los jóvenes de la Parroquia Manantial. Actividades de integración, espacio de escucha activa y convivencia juvenil.',
+    time: 'Por la tarde',
+    location: 'Parroquia Manantial',
     category: 'Juventud',
-    targetAudience: 'Jóvenes de 13 a 25 años',
+    targetAudience: 'Jóvenes Parroquiales',
     organizer: 'Pastoral Juvenil Manantial',
     iconName: 'Users',
-    colorGradient: 'from-sky-500/20 via-indigo-500/10 to-indigo-900/30',
-    printableNotes: 'Entrada libre. Invita a un amigo o compañero de estudio.'
+    colorTheme: 'indigo',
+    printableNotes: 'Encuentro abierto para todos los jóvenes de la Parroquia Manantial.'
   },
   {
     id: 'evt-4-1',
@@ -93,66 +93,15 @@ export const INITIAL_EVENTS: ParochialEvent[] = [
     dateString: '4 de Agosto',
     month: 'Agosto',
     title: 'Jornada de Niños de Agosto (4 a 12 años)',
-    shortSummary: 'Inicio de la gran jornada vacacional de niños. Todos los Martes y Jueves de Agosto.',
-    fullDescription: '¡Arranca nuestra Jornada Vacacional Parroquial para niños de 4 a 12 años! Todos los Martes y Jueves del mes de Agosto. Un programa repleto de juegos, catequesis recreativa, talleres de manualidades, teatro, deportes y merienda.',
-    time: '09:00 AM - 04:00 PM',
-    location: 'Canchas y Salones Parroquiales',
-    category: 'Niños',
-    targetAudience: 'Niños y Niñas de 4 a 12 años',
-    organizer: 'Catequesis e Infancia Misionera',
-    iconName: 'Sparkles',
-    colorGradient: 'from-amber-400/20 via-yellow-500/10 to-amber-900/30',
-    printableNotes: 'Traer ropa cómoda, hidratación y merienda ligera. Se requiere inscripción previa del representante.'
-  },
-  {
-    id: 'evt-6-1',
-    doorNumber: 6,
-    dateString: '6 de Agosto',
-    month: 'Agosto',
-    title: 'Fiesta de la Transfiguración & Hora Santa',
-    shortSummary: 'Solemne Adoración Eucarística y Misa comunitaria por las familias.',
-    fullDescription: 'Celebramos la Fiesta de la Transfiguración del Señor con una Hora Santa Eucarística especial de intercesión por las necesidades de nuestra parroquia y la bendición de los enfermos.',
-    time: '05:30 PM - 07:30 PM',
-    location: 'Templo Parroquial',
-    category: 'Liturgia',
-    targetAudience: 'Toda la comunidad',
-    organizer: 'Equipo de Liturgia',
-    iconName: 'Sun',
-    colorGradient: 'from-yellow-500/20 via-amber-500/10 to-yellow-900/30',
-    printableNotes: 'Asistir con espíritu de oración y devoción.'
-  },
-  {
-    id: 'evt-13-1',
-    doorNumber: 13,
-    dateString: '13 de Agosto',
-    month: 'Agosto',
-    title: 'Jornada de Niños - Taller Recreativo (Martes y Jueves)',
-    shortSummary: 'Continuación de la jornada vacacional infantil con arte, música y valores.',
-    fullDescription: 'Segundo módulo de la jornada de niños de Agosto (Martes y Jueves de 4 a 12 años). Taller interactivo de pintura, canciones parroquiales y juegos comunitarios.',
-    time: '09:00 AM - 04:00 PM',
-    location: 'Patio Central de la Parroquia',
+    shortSummary: 'Jornada vacacional infantil. Todos los Martes y Jueves de Agosto.',
+    fullDescription: 'Gran jornada vacacional para niños de 4 a 12 años. Se llevará a cabo todos los Martes y Jueves del mes de Agosto con juegos, recreación y talleres comunitarios.',
+    time: '09:00 AM a 04:00 PM',
+    location: 'Instalaciones Parroquiales',
     category: 'Niños',
     targetAudience: 'Niños de 4 a 12 años',
-    organizer: 'Equipo de Recreadores',
+    organizer: 'Catequesis e Infancia',
     iconName: 'Sparkles',
-    colorGradient: 'from-purple-500/20 via-fuchsia-500/10 to-purple-900/30',
-    printableNotes: 'Llevar gorra para el sol y camisa de repuesto.'
-  },
-  {
-    id: 'evt-15-1',
-    doorNumber: 15,
-    dateString: '15 de Agosto',
-    month: 'Agosto',
-    title: 'Solemnidad de la Asunción de la Virgen María',
-    shortSummary: 'Misa patronal, procesión mariana y convivencia comunitaria con bendición de flores.',
-    fullDescription: 'Gran celebración parroquial de la Asunción de María a los cielos. Iniciaremos con el Santo Rosario Cantado, Santa Misa Solemne y bendición especial de los frutos y flores traídos por las familias.',
-    time: '10:00 AM - 01:00 PM',
-    location: 'Templo y Plaza Parroquial',
-    category: 'Liturgia',
-    targetAudience: 'Comunidad Parroquial',
-    organizer: 'Cofradía Mariana',
-    iconName: 'Church',
-    colorGradient: 'from-blue-500/20 via-cyan-500/10 to-blue-900/30',
-    printableNotes: 'Pueden traer flores y frutas para ser bendecidas en la Eucaristía.'
+    colorTheme: 'gold',
+    printableNotes: 'Horario: 09:00 AM a 04:00 PM. Válido Martes y Jueves de Agosto para niños de 4 a 12 años.'
   }
 ];
