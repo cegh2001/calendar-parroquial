@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { INITIAL_EVENTS, ParochialEvent } from './data/events';
+import { INITIAL_EVENTS, ParochialEvent, isEventPast } from './data/events';
 import { Header } from './components/Header';
 import { HeroLiturgico } from './components/HeroLiturgico';
 import { AdventCard } from './components/AdventCard';
@@ -25,14 +25,15 @@ export function App() {
     return INITIAL_EVENTS;
   });
 
-  const [openedEventIds, setOpenedEventIds] = useState<string[]>(['evt-28-1']);
+  const [openedEventIds, setOpenedEventIds] = useState<string[]>(() => {
+    return events.filter((evt) => isEventPast(evt)).map((evt) => evt.id);
+  });
   const [selectedMonth, setSelectedMonth] = useState<string>('Todos');
   const [selectedCategory, setSelectedCategory] = useState<string>('Todas');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewMode, setViewMode] = useState<'doors' | 'agenda'>('doors');
   const [selectedEventDetails, setSelectedEventDetails] = useState<ParochialEvent | null>(null);
   const [singleEventToPrint, setSingleEventToPrint] = useState<ParochialEvent | null>(null);
-  const [isNewEventModalOpen, setIsNewEventModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     localStorage.setItem('parochial_events_candelaria_v2', JSON.stringify(events));
@@ -42,11 +43,6 @@ export function App() {
     setOpenedEventIds((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
-  };
-
-  const handleAddEvent = (newEvent: ParochialEvent) => {
-    setEvents((prev) => [newEvent, ...prev]);
-    setOpenedEventIds((prev) => [...prev, newEvent.id]);
   };
 
   const handlePrintSingle = (event: ParochialEvent, e?: React.MouseEvent) => {
@@ -88,7 +84,6 @@ export function App() {
         onSelectMonth={setSelectedMonth}
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
-        onOpenNewEventModal={() => setIsNewEventModalOpen(true)}
         onPrintAll={handlePrintAll}
         totalEventsCount={filteredEvents.length}
         openedEventsCount={openedEventIds.length}
@@ -109,11 +104,11 @@ export function App() {
         {filteredEvents.length === 0 ? (
           <div className="text-center py-16 px-6 rounded-3xl sacred-glass-card border border-amber-500/30 my-6 gold-border-glow max-w-xl mx-auto">
             <Church className="w-14 h-14 text-amber-400 mx-auto mb-4 opacity-90" />
-            <h3 className="text-xl font-bold text-slate-100 font-['Playfair_Display',serif]">
+            <h3 className="text-xl font-bold text-slate-100 font-[#Plus_Jakarta_Sans]">
               No se encontraron actividades parroquiales
             </h3>
             <p className="text-xs text-slate-300 mt-2 leading-relaxed">
-              No hay eventos coincidentes con tu búsqueda o filtros. Probá seleccionando otro mes o agregando un nuevo evento al calendario.
+              No hay eventos coincidentes con tu búsqueda o filtros. Probá seleccionando otro mes.
             </p>
             {(searchQuery || selectedMonth !== 'Todos' || selectedCategory !== 'Todas') && (
               <button
@@ -163,17 +158,11 @@ export function App() {
         </div>
       </footer>
 
-      {/* MODALS */}
+      {/* MODAL DETALLES DE EVENTO */}
       <EventModal
         event={selectedEventDetails}
         onClose={() => setSelectedEventDetails(null)}
         onPrintSingle={handlePrintSingle}
-      />
-
-      <NewEventModal
-        isOpen={isNewEventModalOpen}
-        onClose={() => setIsNewEventModalOpen(false)}
-        onAddEvent={handleAddEvent}
       />
 
       {/* PRINTABLE CARDS SHEET */}
@@ -185,4 +174,5 @@ export function App() {
   );
 }
 export default App;
+
 

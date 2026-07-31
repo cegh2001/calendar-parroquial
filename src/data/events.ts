@@ -17,6 +17,21 @@ export interface ParochialEvent {
   printableNotes?: string;
 }
 
+const MONTH_INDEX_MAP: Record<string, number> = {
+  Julio: 6, // 0-indexed: July is 6
+  Agosto: 7, // August is 7
+};
+
+export function isEventPast(evt: ParochialEvent, referenceDate: Date = new Date()): boolean {
+  const monthIdx = MONTH_INDEX_MAP[evt.month];
+  if (monthIdx === undefined) return false;
+
+  // Event date end of day
+  const eventDate = new Date(referenceDate.getFullYear(), monthIdx, evt.doorNumber, 23, 59, 59);
+  return referenceDate > eventDate;
+}
+
+
 export const INITIAL_EVENTS: ParochialEvent[] = [
   {
     id: 'evt-28-1',

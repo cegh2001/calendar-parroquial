@@ -6,7 +6,6 @@ interface HeaderProps {
   onSelectMonth: (month: string) => void;
   selectedCategory: string;
   onSelectCategory: (cat: string) => void;
-  onOpenNewEventModal: () => void;
   onPrintAll: () => void;
   totalEventsCount: number;
   openedEventsCount: number;
@@ -17,7 +16,6 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectMonth,
   selectedCategory,
   onSelectCategory,
-  onOpenNewEventModal,
   onPrintAll,
   totalEventsCount,
 }) => {
@@ -50,18 +48,10 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-2.5 self-end md:self-auto">
             <button
               onClick={onPrintAll}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#122042] border border-amber-500/30 text-amber-200 hover:bg-[#163674] hover:border-amber-400/60 transition-all text-xs font-semibold shadow-md cursor-pointer active:scale-95"
-            >
-              <Printer className="w-4 h-4 text-amber-400" />
-              <span>Imprimir Fichas ({totalEventsCount})</span>
-            </button>
-
-            <button
-              onClick={onOpenNewEventModal}
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black text-xs shadow-lg transition-all cursor-pointer active:scale-95 border border-amber-300/40"
             >
-              <Plus className="w-4 h-4 stroke-[3]" />
-              <span>Nuevo Evento</span>
+              <Printer className="w-4 h-4 text-slate-950" />
+              <span>Imprimir Fichas ({totalEventsCount})</span>
             </button>
           </div>
         </div>
