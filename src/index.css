@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --gold-glow: rgba(234, 179, 8, 0.4);
+    --gold-border: rgba(234, 179, 8, 0.3);
+    --wine-dark: #3b0712;
+    --navy-deep: #0a0e1a;
+  }
+}
+
+/* Custom 3D Advent Door Flip Effects */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.door-wrapper {
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.door-wrapper.is-opened {
+  transform: rotateY(-140deg);
+}
+
+.door-front,
+.door-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.door-back {
+  transform: rotateY(180deg);
+}
+
+/* Custom Glow Effects */
+.glow-gold {
+  box-shadow: 0 0 25px -5px rgba(234, 179, 8, 0.3), inset 0 0 15px -3px rgba(234, 179, 8, 0.2);
+}
+
+.glow-blue {
+  box-shadow: 0 0 25px -5px rgba(56, 189, 248, 0.3), inset 0 0 15px -3px rgba(56, 189, 248, 0.2);
+}
+
+.stained-glass-bg {
+  background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.35) 0%, rgba(12, 15, 29, 0.95) 75%),
+              linear-gradient(135deg, rgba(234, 179, 8, 0.05) 0%, rgba(190, 18, 60, 0.05) 100%);
+}
+
+.stained-glass-border {
+  border: 1px solid rgba(234, 179, 8, 0.25);
+  background-clip: padding-box;
+}
+
+/* Print Stylesheet for Printable Cards */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Outfit', sans-serif !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 12mm;
+  }
+
+  .printable-card-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  .printable-card {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    border: 2px solid #b45309 !important;
+    background: #fffbeb !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    color: #1c1917 !important;
+    box-shadow: none !important;
+  }
+}
+
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+}
