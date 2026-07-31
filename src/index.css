@@ -2,12 +2,45 @@
 
 @layer base {
   :root {
-    --gold-primary: #d4af37;
-    --gold-light: #fef08a;
-    --gold-dark: #854d0e;
-    --wine-rich: #4c0519;
-    --navy-cathedral: #0b0e1b;
+    /* Paleta de la Virgen de la Candelaria */
+    --candelaria-blue-deep: #091530;
+    --candelaria-blue-manto: #15397a;
+    --candelaria-blue-sky: #38bdf8;
+    --candelaria-gold-light: #fef08a;
+    --candelaria-gold-candela: #f59e0b;
+    --candelaria-gold-border: #d4af37;
+    --candelaria-white-tunica: #ffffff;
+    --candelaria-white-pearl: #f8fafc;
+    --candelaria-carmin-fuego: #be123c;
   }
+}
+
+/* Animación de la Llama de la Candela (Fuego Sagrado de La Candelaria) */
+@keyframes flameFlicker {
+  0%, 100% {
+    transform: scale(1) rotate(-1deg);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8));
+  }
+  25% {
+    transform: scale(1.08) rotate(2deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 14px rgba(251, 191, 36, 0.95));
+  }
+  50% {
+    transform: scale(0.96) rotate(-2deg);
+    opacity: 0.9;
+    filter: drop-shadow(0 0 6px rgba(234, 179, 8, 0.7));
+  }
+  75% {
+    transform: scale(1.04) rotate(1deg);
+    opacity: 0.98;
+    filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.9));
+  }
+}
+
+.candle-flame {
+  animation: flameFlicker 2.5s ease-in-out infinite;
 }
 
 /* 3D Flip Card Architecture (Complete 180° Turn - No Clipping) */
@@ -19,7 +52,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.75s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform-style: preserve-3d;
 }
 
@@ -46,30 +79,30 @@
   z-index: 1;
 }
 
-/* Ambient Stained Glass Cathedral Canvas */
-.cathedral-bg {
-  background-color: #080b15;
+/* Ambient Manto de la Candelaria Canvas */
+.candelaria-bg {
+  background-color: #060b18;
   background-image: 
-    radial-gradient(circle at 50% -20%, rgba(212, 175, 55, 0.15) 0%, transparent 65%),
-    radial-gradient(circle at 10% 40%, rgba(225, 29, 72, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 90% 60%, rgba(14, 165, 233, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 50% 120%, rgba(16, 185, 129, 0.06) 0%, transparent 60%);
+    radial-gradient(circle at 50% -10%, rgba(21, 57, 122, 0.45) 0%, transparent 60%),
+    radial-gradient(circle at 20% 30%, rgba(245, 158, 11, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(190, 18, 60, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 50% 110%, rgba(56, 189, 248, 0.15) 0%, transparent 65%);
 }
 
 .gold-gradient-text {
-  background: linear-gradient(135deg, #fffbeb 0%, #fef08a 40%, #eab308 70%, #ca8a04 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #fef08a 35%, #f59e0b 70%, #d4af37 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.gold-glass-border {
-  border: 1px solid rgba(234, 179, 8, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+.manto-blue-border {
+  border: 1.5px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 10px 35px -5px rgba(9, 21, 48, 0.8);
 }
 
-.gold-glass-border:hover {
-  border-color: rgba(250, 204, 21, 0.5);
-  box-shadow: 0 0 25px rgba(234, 179, 8, 0.2);
+.manto-blue-border:hover {
+  border-color: rgba(245, 158, 11, 0.7);
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.25), inset 0 0 15px rgba(21, 57, 122, 0.3);
 }
 
 /* Print Stylesheet */
@@ -102,11 +135,11 @@
   .printable-card {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
-    border: 2px solid #92400e !important;
-    background: #fffbeb !important;
+    border: 2px solid #15397a !important;
+    background: #f8fafc !important;
     border-radius: 12px !important;
     padding: 16px !important;
-    color: #18181b !important;
+    color: #0f172a !important;
   }
 }
 

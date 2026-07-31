@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ParochialEvent } from '../data/events';
-import { X, Sparkles } from 'lucide-react';
+import { X, Sparkles, Flame } from 'lucide-react';
 
 interface NewEventModalProps {
   isOpen: boolean;
@@ -17,7 +17,7 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
   const [fullDescription, setFullDescription] = useState<string>('');
   const [time, setTime] = useState<string>('09:00 AM - 04:00 PM');
   const [location, setLocation] = useState<string>('Salón Parroquial');
-  const [category, setCategory] = useState<'Niños' | 'Salud' | 'Juventud' | 'Familia' | 'Caridad'>('Niños');
+  const [category, setCategory] = useState<'Niños' | 'Salud' | 'Juventud' | 'Familia'>('Niños');
   const [targetAudience, setTargetAudience] = useState<string>('');
   const [organizer, setOrganizer] = useState<string>('Equipo Parroquial');
   const [socialHandle, setSocialHandle] = useState<string>('');
@@ -31,14 +31,12 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
     const iconName: ParochialEvent['iconName'] = 
       category === 'Niños' ? 'Baby' : 
       category === 'Salud' ? 'Stethoscope' : 
-      category === 'Juventud' ? 'Users' : 
-      category === 'Familia' ? 'HeartHandshake' : 'Sparkles';
+      category === 'Juventud' ? 'Users' : 'HeartHandshake';
 
     const colorTheme: ParochialEvent['colorTheme'] = 
-      category === 'Niños' ? 'amber' : 
-      category === 'Salud' ? 'emerald' : 
-      category === 'Juventud' ? 'indigo' : 
-      category === 'Familia' ? 'rose' : 'gold';
+      category === 'Niños' ? 'candelaria-gold' : 
+      category === 'Salud' ? 'candelaria-blue' : 
+      category === 'Juventud' ? 'candelaria-blue' : 'candelaria-carmin';
 
     const newEvent: ParochialEvent = {
       id: `evt-${Date.now()}`,
@@ -66,12 +64,12 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
   return (
     <div className="no-print fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fadeIn">
       <div 
-        className="relative w-full max-w-xl rounded-3xl bg-slate-900 border-2 border-amber-500/40 shadow-2xl overflow-hidden"
+        className="relative w-full max-w-xl rounded-3xl bg-[#091530] border-2 border-sky-400/50 shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-sky-900 bg-[#060b18]">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-amber-400" />
+            <Flame className="w-5 h-5 text-amber-400 candle-flame" />
             <h3 className="text-lg font-bold text-slate-100 font-['Playfair_Display',serif]">
               Agregar Evento Parroquial
             </h3>
@@ -87,22 +85,22 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
         <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Número (#)</label>
+              <label className="block text-xs font-bold text-slate-300 mb-1">Número (#)</label>
               <input
                 type="number"
                 value={doorNumber}
                 onChange={(e) => setDoorNumber(parseInt(e.target.value))}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
+                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-sky-900 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Fecha Visible (Ej: 10 de Agosto)</label>
+              <label className="block text-xs font-bold text-slate-300 mb-1">Fecha Visible (Ej: 10 de Agosto)</label>
               <input
                 type="text"
                 value={dateString}
                 onChange={(e) => setDateString(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
+                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-sky-900 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
                 required
               />
             </div>
@@ -110,113 +108,112 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Mes</label>
+              <label className="block text-xs font-bold text-slate-300 mb-1">Mes</label>
               <select
                 value={month}
                 onChange={(e) => setMonth(e.target.value as any)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
+                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-sky-900 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
               >
                 <option value="Julio">Julio</option>
                 <option value="Agosto">Agosto</option>
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Categoría</label>
+              <label className="block text-xs font-bold text-slate-300 mb-1">Categoría</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as any)}
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
+                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-sky-900 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
               >
                 <option value="Niños">Niños</option>
                 <option value="Salud">Salud</option>
                 <option value="Juventud">Juventud</option>
                 <option value="Familia">Familia</option>
-                <option value="Caridad">Caridad</option>
               </select>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-400 mb-1">Título del Evento</label>
+            <label className="block text-xs font-bold text-slate-300 mb-1">Título del Evento</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Ej: Jornada Vacacional de Niños"
-              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
+              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-sky-900 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
               required
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Horario</label>
+              <label className="block text-xs font-bold text-slate-300 mb-1">Horario</label>
               <input
                 type="text"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
                 placeholder="09:00 AM - 04:00 PM"
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
+                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-sky-900 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Lugar</label>
+              <label className="block text-xs font-bold text-slate-300 mb-1">Lugar</label>
               <input
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="Salón Parroquial"
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
+                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-sky-900 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-400 mb-1">Resumen Corto</label>
+            <label className="block text-xs font-bold text-slate-300 mb-1">Resumen Corto</label>
             <input
               type="text"
               value={shortSummary}
               onChange={(e) => setShortSummary(e.target.value)}
               placeholder="Breve vista previa para la tarjeta"
-              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
+              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-sky-900 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-400 mb-1">Descripción Completa</label>
+            <label className="block text-xs font-bold text-slate-300 mb-1">Descripción Completa</label>
             <textarea
               rows={3}
               value={fullDescription}
               onChange={(e) => setFullDescription(e.target.value)}
               placeholder="Detalles adicionales sobre la actividad"
-              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
+              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-sky-900 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Organizador</label>
+              <label className="block text-xs font-bold text-slate-300 mb-1">Organizador</label>
               <input
                 type="text"
                 value={organizer}
                 onChange={(e) => setOrganizer(e.target.value)}
                 placeholder="Ej: Pastoral de la Juventud"
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
+                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-sky-900 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Red Social / Tag (Opcional)</label>
+              <label className="block text-xs font-bold text-slate-300 mb-1">Red Social / Tag (Opcional)</label>
               <input
                 type="text"
                 value={socialHandle}
                 onChange={(e) => setSocialHandle(e.target.value)}
                 placeholder="Ej: @ecodap"
-                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
+                className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-sky-900 text-slate-200 text-sm focus:border-amber-400 focus:outline-none"
               />
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-800 flex justify-end gap-2">
+          <div className="pt-4 border-t border-sky-900 flex justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
@@ -226,7 +223,7 @@ export const NewEventModal: React.FC<NewEventModalProps> = ({ isOpen, onClose, o
             </button>
             <button
               type="submit"
-              className="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/20 cursor-pointer"
+              className="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-extrabold text-xs shadow-lg shadow-amber-500/20 cursor-pointer"
             >
               Guardar Evento
             </button>
